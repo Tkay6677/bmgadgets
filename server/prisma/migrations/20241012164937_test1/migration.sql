@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `customer_order` ADD COLUMN `userId` VARCHAR(191) NOT NULL DEFAULT 'YV6tnAVpALcTi-EBSGvRZ';
