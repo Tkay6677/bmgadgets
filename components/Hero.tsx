@@ -11,7 +11,7 @@ const Hero = () => {
             <span className="text-red-500">NO HYPE</span>, JUST THE REAL DEAL
           </h1>
           <p className="text-white max-sm:text-sm">
-            Bringing you the latest gadgets that&rsquo;s built to impress. Whether you're upgrading your setup or looking for the hottest gadgets, we&rsquo;ve got you covered with top-quality gear that stands out. Step into the future with innovation that&rsquo;s bold, reliable, and ready for action.
+            Bringing you the latest gadgets that&rsquo;s built to impress. Whether you&rsquo;re upgrading your setup or looking for the hottest gadgets, we&rsquo;ve got you covered with top-quality gear that stands out. Step into the future with innovation that&rsquo;s bold, reliable, and ready for action.
           </p>
           <div className="flex gap-x-1 max-lg:flex-col max-lg:gap-y-1">
             <Link href={`/shop`}>
