@@ -107,7 +107,7 @@ const CheckoutPage = () => {
       // }
 
       // sending API request for creating a order
-      await pay()
+     // await pay()
     } else {
       toast.error("You need to enter values in the input fields");
     }
@@ -132,82 +132,82 @@ const CheckoutPage = () => {
     });
   };
 
-  const pay = async () => {
-    const handler = PaystackPop.setup({
-      key: 'pk_test_822f00453c326a2e52a3d8014dfd25e5f1b37b03', // Replace with your public key from Paystack
-      email: checkoutForm.email,
-      amount: Math.round((total + total / 5 + 5) * 100), // Paystack takes the amount in kobo, so multiply by 100
-      currency: 'NGN', // Change to your currency if needed
-      ref: '' + Math.floor(Math.random() * 1000000000 + 1), // Generate a unique reference for this payment
-      callback: function(resp: any) {
-        // This happens after the payment is successful
-        const response = fetch("http://localhost:3001/api/orders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: checkoutForm.name,
-            lastname: checkoutForm.lastname,
-            phone: checkoutForm.phone,
-            email: checkoutForm.email,
-            company: checkoutForm.company,
-            adress: checkoutForm.adress,
-            apartment: checkoutForm.apartment,
-            postalCode: checkoutForm.postalCode,
-            status: "processing",
-            total: total,
-            city: checkoutForm.city,
-            country: checkoutForm.country,
-            orderNotice: checkoutForm.orderNotice,
-            userId: uid
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const orderId: string = data.id;
-            // for every product in the order we are calling addOrderProduct function that adds fields to the customer_order_product table
-            for (let i = 0; i < products.length; i++) {
-              let productId: string = products[i].id;
-              addOrderProduct(orderId, products[i].id, products[i].amount);
-            }
-          })
-          .then(() => {
-            setCheckoutForm({
-              name: "",
-              lastname: "",
-              phone: "",
-              email: "",
-              cardName: "",
-              cardNumber: "",
-              expirationDate: "",
-              cvc: "",
-              company: "",
-              adress: "",
-              apartment: "",
-              city: "",
-              country: "",
-              postalCode: "",
-              orderNotice: "",
-              userId : ""
-            });
-            setUserid("");
-            clearCart();
-            toast.success("Order created successfuly");
-            setTimeout(() => {
-              router.push("/");
-            }, 1000);
-          });
-        alert('Payment successful. Transaction ref is ' + resp.reference);
+  // const pay = async () => {
+  //   const handler = PaystackPop.setup({
+  //     key: 'pk_test_822f00453c326a2e52a3d8014dfd25e5f1b37b03', // Replace with your public key from Paystack
+  //     email: checkoutForm.email,
+  //     amount: Math.round((total + total / 5 + 5) * 100), // Paystack takes the amount in kobo, so multiply by 100
+  //     currency: 'NGN', // Change to your currency if needed
+  //     ref: '' + Math.floor(Math.random() * 1000000000 + 1), // Generate a unique reference for this payment
+  //     callback: function(resp: any) {
+  //       // This happens after the payment is successful
+  //       const response = fetch("http://localhost:3001/api/orders", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           name: checkoutForm.name,
+  //           lastname: checkoutForm.lastname,
+  //           phone: checkoutForm.phone,
+  //           email: checkoutForm.email,
+  //           company: checkoutForm.company,
+  //           adress: checkoutForm.adress,
+  //           apartment: checkoutForm.apartment,
+  //           postalCode: checkoutForm.postalCode,
+  //           status: "processing",
+  //           total: total,
+  //           city: checkoutForm.city,
+  //           country: checkoutForm.country,
+  //           orderNotice: checkoutForm.orderNotice,
+  //           userId: uid
+  //         }),
+  //       })
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           const orderId: string = data.id;
+  //           // for every product in the order we are calling addOrderProduct function that adds fields to the customer_order_product table
+  //           for (let i = 0; i < products.length; i++) {
+  //             let productId: string = products[i].id;
+  //             addOrderProduct(orderId, products[i].id, products[i].amount);
+  //           }
+  //         })
+  //         .then(() => {
+  //           setCheckoutForm({
+  //             name: "",
+  //             lastname: "",
+  //             phone: "",
+  //             email: "",
+  //             cardName: "",
+  //             cardNumber: "",
+  //             expirationDate: "",
+  //             cvc: "",
+  //             company: "",
+  //             adress: "",
+  //             apartment: "",
+  //             city: "",
+  //             country: "",
+  //             postalCode: "",
+  //             orderNotice: "",
+  //             userId : ""
+  //           });
+  //           setUserid("");
+  //           clearCart();
+  //           toast.success("Order created successfuly");
+  //           setTimeout(() => {
+  //             router.push("/");
+  //           }, 1000);
+  //         });
+  //       alert('Payment successful. Transaction ref is ' + resp.reference);
         
-      },
-      onClose: function() {
-        alert('Transaction was not completed, window closed.');
-      }
-    });
+  //     },
+  //     onClose: function() {
+  //       alert('Transaction was not completed, window closed.');
+  //     }
+  //   });
   
-    handler.openIframe(); // Open the payment modal
-  };
+  //   handler.openIframe(); // Open the payment modal
+  // };
   
  
 

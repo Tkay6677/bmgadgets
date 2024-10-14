@@ -71,74 +71,74 @@ const AdminSingleOrder = () => {
     fetchOrderProducts();
   }, [params?.id]);
 
-  const updateOrder = async () => {
-    if (
-      order?.name.length > 0 &&
-      order?.lastname.length > 0 &&
-      order?.phone.length > 0 &&
-      order?.email.length > 0 &&
-      order?.company.length > 0 &&
-      order?.adress.length > 0 &&
-      order?.apartment.length > 0 &&
-      order?.city.length > 0 &&
-      order?.country.length > 0 &&
-      order?.postalCode.length > 0
-    ) {
-      if (!isValidNameOrLastname(order?.name)) {
-        toast.error("You entered invalid name format");
-        return;
-      }
+  // const updateOrder = async () => {
+  //   if (
+  //     order?.name.length > 0 &&
+  //     order?.lastname.length > 0 &&
+  //     order?.phone.length > 0 &&
+  //     order?.email.length > 0 &&
+  //     order?.company.length > 0 &&
+  //     order?.adress.length > 0 &&
+  //     order?.apartment.length > 0 &&
+  //     order?.city.length > 0 &&
+  //     order?.country.length > 0 &&
+  //     order?.postalCode.length > 0
+  //   ) {
+  //     if (!isValidNameOrLastname(order?.name)) {
+  //       toast.error("You entered invalid name format");
+  //       return;
+  //     }
 
-      if (!isValidNameOrLastname(order?.lastname)) {
-        toast.error("You entered invalid lastname format");
-        return;
-      }
+  //     if (!isValidNameOrLastname(order?.lastname)) {
+  //       toast.error("You entered invalid lastname format");
+  //       return;
+  //     }
 
-      if (!isValidEmailAddressFormat(order?.email)) {
-        toast.error("You entered invalid email format");
-        return;
-      }
+  //     if (!isValidEmailAddressFormat(order?.email)) {
+  //       toast.error("You entered invalid email format");
+  //       return;
+  //     }
 
-      fetch(`http://localhost:3001/api/orders/${order?.id}`, {
-        method: "PUT", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(order),
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            toast.success("Order updated successfuly");
-          } else {
-            throw Error("There was an error while updating a order");
-          }
-        })
-        .catch((error) =>
-          toast.error("There was an error while updating a order")
-        );
-    } else {
-      toast.error("Please fill all fields");
-    }
-  };
+  //     fetch(`http://localhost:3001/api/orders/${order?.id}`, {
+  //       method: "PUT", // or 'PUT'
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(order),
+  //     })
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           toast.success("Order updated successfuly");
+  //         } else {
+  //           throw Error("There was an error while updating a order");
+  //         }
+  //       })
+  //       .catch((error) =>
+  //         toast.error("There was an error while updating a order")
+  //       );
+  //   } else {
+  //     toast.error("Please fill all fields");
+  //   }
+  // };
 
-  const deleteOrder = async () => {
-    const requestOptions = {
-      method: "DELETE",
-    };
+  // const deleteOrder = async () => {
+  //   const requestOptions = {
+  //     method: "DELETE",
+  //   };
 
-    fetch(
-      `http://localhost:3001/api/order-product/${order?.id}`,
-      requestOptions
-    ).then((response) => {
-      fetch(
-        `http://localhost:3001/api/orders/${order?.id}`,
-        requestOptions
-      ).then((response) => {
-        toast.success("Order deleted successfully");
-        router.push("/admin/orders");
-      });
-    });
-  };
+  //   fetch(
+  //     `http://localhost:3001/api/order-product/${order?.id}`,
+  //     requestOptions
+  //   ).then((response) => {
+  //     fetch(
+  //       `http://localhost:3001/api/orders/${order?.id}`,
+  //       requestOptions
+  //     ).then((response) => {
+  //       toast.success("Order deleted successfully");
+  //       router.push("/admin/orders");
+  //     });
+  //   });
+  // };
 
   return (
     <div className="bg-white flex justify-start max-w-screen-2xl mx-auto xl:h-full max-xl:flex-col max-xl:gap-y-5">

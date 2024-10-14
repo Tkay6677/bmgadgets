@@ -44,6 +44,7 @@ const AdminSingleOrder = () => {
     orderNotice: "",
     status: "processing",
     total: 0,
+    userId: ""
   });
   const params = useParams<{ id: string }>();
 
