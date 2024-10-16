@@ -10,7 +10,8 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://bmdb_user_tpain:nbH_j78VXzx*ZT@mysql.premiumtrustfinance.io:3306/bmdb_test_tpain?sslmode=require"
+//  env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 

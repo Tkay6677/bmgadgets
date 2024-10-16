@@ -20,7 +20,7 @@ const CheckoutPage = () => {
   
   const fetchUser = async () => {
     const userEmail = session?.user?.email;
-    const response = await fetch("http://localhost:3001/api/users");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`);
     const data = await response.json();
     const filtered = await data.find((user: User) => user.email === userEmail);
     if (filtered) setUserid(filtered.id);
@@ -119,7 +119,7 @@ const CheckoutPage = () => {
     productQuantity: number
   ) => {
     // sending API POST request for the table customer_order_product that does many to many relatioship for order and product
-    const response = await fetch("http://localhost:3001/api/order-product", {
+    const response = await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/order-product", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -141,7 +141,7 @@ const CheckoutPage = () => {
   //     ref: '' + Math.floor(Math.random() * 1000000000 + 1), // Generate a unique reference for this payment
   //     callback: function(resp: any) {
   //       // This happens after the payment is successful
-  //       const response = fetch("http://localhost:3001/api/orders", {
+  //       const response = fetch("${process.env.NEXT_PUBLIC_API_URL}/api/orders", {
   //         method: "POST",
   //         headers: {
   //           "Content-Type": "application/json",

@@ -22,7 +22,7 @@ const UserOrders = () => {
   
   const fetchUser = async () => {
     const userEmail = session?.user?.email;
-    const response = await fetch("http://localhost:3001/api/users");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`);
     const data = await response.json();
     const filtered = data.find((user: User) => user.email === userEmail);
     if (filtered) setUid(filtered.id);
@@ -32,7 +32,7 @@ const UserOrders = () => {
     // Only fetch orders if userid is available
     if (userid) {
       const fetchOrders = async () => {
-        const response = await fetch("http://localhost:3001/api/orders");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`);
         const data = await response.json();
         setOrders(data);
 
