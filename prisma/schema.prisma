@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://bmdb_user_tpain:nbH_j78VXzx%2AZT@mysql.premiumtrustfinance.io:3306/bmdb_test_tpain"
+  url      = "mysql://bmdb_user_tpain:nbH_j78VXzx%2AZT@mysql.premiumtrustfinance.io:3306/bmdb_test_tpain?sslmode=require"
 }
 
 model Product {
