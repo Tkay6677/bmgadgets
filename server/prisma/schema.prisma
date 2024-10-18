@@ -12,7 +12,7 @@ datasource db {
   provider = "mysql"
   url      = "mysql://bmdb_user_tpain:nbH_j78VXzx*ZT@mysql.premiumtrustfinance.io:3306/bmdb_test_tpain?sslmode=require"
 //  env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  shadowDatabaseUrl = "mysql://bmdb_user_tpain:nbH_j78VXzx*ZT@mysql.premiumtrustfinance.io:3306/bmdb_test_shadow?sslmode=require" //env("SHADOW_DATABASE_URL")
 }
 
 model Product {
