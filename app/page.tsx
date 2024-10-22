@@ -5,9 +5,10 @@ export default function Home() {
     <>
     <Hero />
     {/* <IntroducingSection /> */}
-    <Incentives />
+   
     <CategoryMenu />
     <ProductsSection />
+    <Incentives />
     </>
   );
 }

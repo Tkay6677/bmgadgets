@@ -23,3 +23,23 @@
       ),
       linear-gradient(-45deg, white 50%, #ef4444 50.99%);
 }
+
+/* Define the keyframes for infinite scrolling */
+@keyframes scroll {
+  0% {
+    transform: translateX(0); /* Start from the initial position */
+  }
+  100% {
+    transform: translateX(-50%); /* Move by half the container width */
+  }
+}
+
+/* Animation class for continuous scrolling */
+.animate-scroll {
+  display: inline-flex;
+  animation: scroll 40s linear infinite; /* Duration and smoothness of the scroll */
+  will-change: transform; /* Optimizes performance for scroll + animation */
+  scroll-behavior: smooth; /* Ensure smooth scrolling when the user manually scrolls */
+}
+
+/* Add smooth scrolling */
