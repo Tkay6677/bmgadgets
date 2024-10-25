@@ -17,7 +17,7 @@ const CategoryMenu = () => {
     const handleScroll = () => {
       if (scrollContainer) {
         const scrollWidth = scrollContainer.scrollWidth / 2;
-        
+
         // If scrolled past the original items, jump back to the start of the original items
         if (scrollContainer.scrollLeft >= scrollWidth) {
           scrollContainer.scrollLeft = 0;
@@ -48,7 +48,7 @@ const CategoryMenu = () => {
 
   return (
     <div className="py-10 mt-10 bg-black">
-      <h2 className="text-white text-7xl font-extrabold text-center mt-20 max-lg:text-5xl">
+      <h2 className="text-white text-7xl font-extrabold text-center mt-10 max-lg:text-5xl">
         TOP <span className="text-red-500">CATEGORIES</span>
       </h2>
 
@@ -65,7 +65,10 @@ const CategoryMenu = () => {
       </div>
 
       {/* Mobile View: Horizontal Scroll with Infinite Loop */}
-      <div className="relative overflow-x-auto md:hidden py-5 px-5" ref={scrollRef}>
+      <div
+        className="relative overflow-x-auto md:hidden py-5 px-5"
+        ref={scrollRef}
+      >
         <div className="flex flex-nowrap space-x-5 animate-scroll">
           {duplicatedList.map((item, index) => (
             <div
