@@ -3,31 +3,31 @@ export const categoryMenuList = [
     id: 1,
     title: "iPhones",
     src: "/catbanner-05.webp",
-    href: "/shop/smart-phones"
+    href: "/shop/iphones",
   },
   {
     id: 2,
     title: "iPads",
     src: "/catbanner-03.jpg",
-    href: "/shop/tablets"
+    href: "/shop/ipads",
   },
   {
     id: 3,
     title: "Laptops",
     src: "/catbanner-01.jpg",
-    href: "/shop/mouses"
+    href: "/shop/laptops",
   },
   {
     id: 4,
     title: "Accessories",
     src: "/catbanner-04.jpg",
-    href: "/shop/cameras"
+    href: "/shop/speakers",
   },
   {
     id: 5,
     title: "Smart Watches",
     src: "/catbanner-02.jpg",
-    href: "/shop/watches"
+    href: "/shop/watches",
   },
   // {
   //   id: 6,
@@ -125,7 +125,7 @@ export const isValidCardNumber = (input: string) => {
   // test for credit card number between 13 and 19 characters
   const regex = /^\d{13,19}$/;
   return regex.test(cleanedInput);
-}
+};
 
 export const isValidCreditCardExpirationDate = (input: string) => {
   // simple expiration date format check
