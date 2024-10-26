@@ -144,7 +144,7 @@ const CheckoutPage = () => {
   const config = {
     public_key: "FLWPUBK_TEST-9728eb1667d9a0ac5a819bfe10a5d42b-X",
     tx_ref: "" + Math.floor(Math.random() * 1000000000 + 1),
-    amount: Math.round((total + total / 5 + 5) * 100),
+    amount: total,
     currency: "USD",
     payment_options: "card,mobilemoney,ussd",
     customer: {
