@@ -741,6 +741,71 @@ const CheckoutPage = () => {
                   handleFlutterPayment({
                     callback: (response) => {
                       console.log(response);
+                      const rsp = fetch(
+                        "${process.env.NEXT_PUBLIC_API_URL}/api/orders",
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            name: checkoutForm.name,
+                            lastname: checkoutForm.lastname,
+                            phone: checkoutForm.phone,
+                            email: checkoutForm.email,
+                            company: checkoutForm.company,
+                            adress: checkoutForm.adress,
+                            apartment: checkoutForm.apartment,
+                            postalCode: checkoutForm.postalCode,
+                            status: "processing",
+                            total: total,
+                            city: checkoutForm.city,
+                            country: checkoutForm.country,
+                            orderNotice: checkoutForm.orderNotice,
+                            userId: uid,
+                          }),
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          const orderId: string = data.id;
+                          // for every product in the order we are calling addOrderProduct function that adds fields to the customer_order_product table
+                          for (let i = 0; i < products.length; i++) {
+                            let productId: string = products[i].id;
+                            addOrderProduct(
+                              orderId,
+                              products[i].id,
+                              products[i].amount
+                            );
+                          }
+                        })
+                        .then(() => {
+                          setCheckoutForm({
+                            name: "",
+                            lastname: "",
+                            phone: "",
+                            email: "",
+                            cardName: "",
+                            cardNumber: "",
+                            expirationDate: "",
+                            cvc: "",
+                            company: "",
+                            adress: "",
+                            apartment: "",
+                            city: "",
+                            country: "",
+                            postalCode: "",
+                            orderNotice: "",
+                            userId: "",
+                          });
+                          setUserid("");
+                          clearCart();
+                          toast.success("Order created successfuly");
+                          setTimeout(() => {
+                            router.push("/");
+                          }, 1000);
+                        });
+
                       closePaymentModal(); // this will close the modal programmatically
                     },
                     onClose: () => {},
