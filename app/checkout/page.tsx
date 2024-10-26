@@ -5,9 +5,17 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { isValidCardNumber, isValidCreditCardCVVOrCVC, isValidCreditCardExpirationDate, isValidEmailAddressFormat, isValidNameOrLastname } from "@/lib/utils";
-import PaystackPop from '@paystack/inline-js'
-import {useSession } from "next-auth/react";
+import {
+  isValidCardNumber,
+  isValidCreditCardCVVOrCVC,
+  isValidCreditCardExpirationDate,
+  isValidEmailAddressFormat,
+  isValidNameOrLastname,
+} from "@/lib/utils";
+import PaystackPop from "@paystack/inline-js";
+import { usePaystackPayment } from "react-paystack";
+import { useSession } from "next-auth/react";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
 const CheckoutPage = () => {
   const { data: session }: any = useSession();
@@ -17,20 +25,19 @@ const CheckoutPage = () => {
       fetchUser();
     }
   }, [session]);
-  
+
   const fetchUser = async () => {
     const userEmail = session?.user?.email;
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/users`
+    );
     const data = await response.json();
     const filtered = await data.find((user: User) => user.email === userEmail);
     if (filtered) setUserid(filtered.id);
-   
   };
   useEffect(() => {
     console.log(uid);
   }, [uid]);
-  
-
 
   const [checkoutForm, setCheckoutForm] = useState({
     name: "",
@@ -107,7 +114,7 @@ const CheckoutPage = () => {
       // }
 
       // sending API request for creating a order
-     // await pay()
+      // await pay()
     } else {
       toast.error("You need to enter values in the input fields");
     }
@@ -119,19 +126,39 @@ const CheckoutPage = () => {
     productQuantity: number
   ) => {
     // sending API POST request for the table customer_order_product that does many to many relatioship for order and product
-    const response = await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/order-product", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        customerOrderId: orderId,
-        productId: productId,
-        quantity: productQuantity,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/order-product`,
+      {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customerOrderId: orderId,
+          productId: productId,
+          quantity: productQuantity,
+        }),
+      }
+    );
   };
-
+  const config = {
+    public_key: "FLWPUBK_TEST-9728eb1667d9a0ac5a819bfe10a5d42b-X",
+    tx_ref: "" + Math.floor(Math.random() * 1000000000 + 1),
+    amount: Math.round((total + total / 5 + 5) * 100),
+    currency: "USD",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: checkoutForm.email,
+      phone_number: checkoutForm.phone,
+      name: checkoutForm.name,
+    },
+    customizations: {
+      title: "BM Gadgets Checkout",
+      description: "Payment for items in cart",
+      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
+  const handleFlutterPayment = useFlutterwave(config);
   // const pay = async () => {
   //   const handler = PaystackPop.setup({
   //     key: 'pk_test_822f00453c326a2e52a3d8014dfd25e5f1b37b03', // Replace with your public key from Paystack
@@ -199,19 +226,15 @@ const CheckoutPage = () => {
   //           }, 1000);
   //         });
   //       alert('Payment successful. Transaction ref is ' + resp.reference);
-        
+
   //     },
   //     onClose: function() {
   //       alert('Transaction was not completed, window closed.');
   //     }
   //   });
-  
+
   //   handler.openIframe(); // Open the payment modal
   // };
-  
- 
-
-  
 
   useEffect(() => {
     if (products.length === 0) {
@@ -258,7 +281,11 @@ const CheckoutPage = () => {
                   className="flex items-start space-x-4 py-6"
                 >
                   <Image
-                    src={product?.image ? `/${product?.image}` : "/product_placeholder.jpg"}
+                    src={
+                      product?.image
+                        ? `/${product?.image}`
+                        : "/product_placeholder.jpg"
+                    }
                     alt={product?.title}
                     width={80}
                     height={80}
@@ -710,7 +737,15 @@ const CheckoutPage = () => {
             <div className="mt-10 border-t border-gray-200 pt-6 ml-0 pb-[50px]">
               <button
                 type="button"
-                onClick={makePurchase}
+                onClick={() => {
+                  handleFlutterPayment({
+                    callback: (response) => {
+                      console.log(response);
+                      closePaymentModal(); // this will close the modal programmatically
+                    },
+                    onClose: () => {},
+                  });
+                }}
                 className="w-full rounded-md border border-transparent bg-red-500 px-20 py-2 text-lg font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-50 sm:order-last"
               >
                 Pay Now
