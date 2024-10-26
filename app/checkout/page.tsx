@@ -742,7 +742,7 @@ const CheckoutPage = () => {
                     callback: (response) => {
                       console.log(response);
                       const rsp = fetch(
-                        "${process.env.NEXT_PUBLIC_API_URL}/api/orders",
+                        `${process.env.NEXT_PUBLIC_API_URL}/api/orders`,
                         {
                           method: "POST",
                           headers: {
